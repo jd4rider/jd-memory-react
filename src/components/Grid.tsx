@@ -17,12 +17,15 @@ const GridJD = ({ cards, setCards }: Props) => {
   const [matchCount, setMatchCount] = useState<number>(0);
   const [gameComplete, setGameComplete] = useState<boolean>(false);
   const [cardFlip] = useSound(`${window.location.href}/sounds/cardflip.mp3`)
+  const [reverseCardFlip] = useSound(`${window.location.href}/sounds/reverseflipcard.mp3`, { volume: 0.50 })
+  const [matchsound] = useSound(`${window.location.href}/sounds/lockin.mp3`)
 
   const cardFix = (curridx: number, previdx: number) => {
 
     let cardsCopy1: CardType[] = [...cards];
 
     setTimeout(() => {
+      reverseCardFlip()
       cardsCopy1[curridx].hidden = true;
       cardsCopy1[previdx].hidden = true;
       setCards([...cardsCopy1])
@@ -39,6 +42,9 @@ const GridJD = ({ cards, setCards }: Props) => {
         cardFix(idx, prevCardIdx);
       } else {
         // Made a match
+        //setTimeout(() => {
+        //  matchsound()
+        //}, 300)
         setMatchCount(matchCount + 1)
         if (matchCount + 1 == cards.length / 2) {
           setTimeout(() => {

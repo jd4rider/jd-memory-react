@@ -1,7 +1,7 @@
 {
   "name": "jd-memory-react",
   "private": true,
-  "homepage": "http://jd4rider.github.io/jd-memory-react",
+  "homepage": "https://jd4rider.github.io/jd-memory-react",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -9,14 +9,16 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-card-flip": "^1.2.0",
-    "react-dom": "^18.2.0"
+    "react-confetti-explosion": "^2.0.2",
+    "react-dom": "^18.2.0",
+    "use-sound": "^4.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

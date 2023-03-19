@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import CardItem from './Card';
 import { CardType } from '../App';
+import ConfettiExplosion from 'react-confetti-explosion';
+import useSound from 'use-sound';
 
 interface Props {
   cards: CardType[];
@@ -12,6 +14,9 @@ interface Props {
 const GridJD = ({ cards, setCards }: Props) => {
 
   const [prevCardIdx, setPrevCardIdx] = useState<number | null>(null);
+  const [matchCount, setMatchCount] = useState<number>(0);
+  const [gameComplete, setGameComplete] = useState<boolean>(false);
+  const [cardFlip] = useSound(`${window.location.href}/sounds/cardflip.mp3`)
 
   const cardFix = (curridx: number, previdx: number) => {
 
@@ -28,10 +33,18 @@ const GridJD = ({ cards, setCards }: Props) => {
   const handleClick = (idx: number) => {
     let cardsCopy: CardType[] = [...cards];
     cardsCopy[idx].hidden = false;
+    cardFlip()
     if (prevCardIdx != null) {
       if (cardsCopy[idx].type != cardsCopy[prevCardIdx].type) {
         cardFix(idx, prevCardIdx);
       } else {
+        // Made a match
+        setMatchCount(matchCount + 1)
+        if (matchCount + 1 == cards.length / 2) {
+          setTimeout(() => {
+            setGameComplete(true);
+          }, 750)
+        }
         setPrevCardIdx(null);
       }
     } else {
@@ -48,7 +61,8 @@ const GridJD = ({ cards, setCards }: Props) => {
 
   return (
     <>
-      < Row xs={5} className="g-4 p-0 m-0" >
+      {gameComplete && <ConfettiExplosion />}
+      <Row xs={5} className="g-4 p-0 m-0" >
         <Col className="p-0 m-1">
           <CardItem card={cards[0]} onClick={handleClick} index={0} />
         </Col>

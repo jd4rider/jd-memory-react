@@ -18,16 +18,17 @@ const CardItem = ({ card, onClick, index }: Props) => {
     showHidden(true);
   }
 
+
   return (
     <ReactCardFlip
       isFlipped={!card?.hidden}
       flipSpeedBackToFront={1}
       flipSpeedFrontToBack={1}>
       <Card className={cardClass} onClick={() => { onClick(index) }}>
-        <Card.Img style={{ height: "139px" }} src="/images/pokeball.png" />
+        <Card.Img style={{ height: "139px" }} src={`${window.location.href}/images/pokeball.png`} />
       </Card>
       <Card className={cardClass}>
-        <Card.Img style={{ height: "139px" }} src={card?.image} />
+        <Card.Img style={{ height: "139px" }} src={window.location.href + card?.image} />
       </Card>
     </ReactCardFlip>
   )
